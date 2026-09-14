@@ -228,7 +228,7 @@ const questions: Question[] = [
 ];
 
 const TOTAL_TIME = 35 * 60;
-const PASS_MARK = 18;
+const PASS_MARK = 15;
 
 export default function FPFFPage() {
   const [current, setCurrent] = useState(0);
@@ -238,8 +238,7 @@ export default function FPFFPage() {
   const [submitted, setSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [name, setName] = useState("");
-  const [indos, setIndos] = useState("");
-
+ const [rollNo, setRollNo] = useState("");
   useEffect(() => {
     if (submitted) return;
 
@@ -287,7 +286,7 @@ export default function FPFFPage() {
     setSubmitted(false);
     setTimeLeft(TOTAL_TIME);
     setName("");
-    setIndos("");
+    setRollNo("");
   }
 
   async function submitTest() {
@@ -297,7 +296,7 @@ export default function FPFFPage() {
     .from("exam_results")
     .insert({
       candidate_name: name,
-      candidate_no: Number(indos),
+      candidate_no: Number(rollNo),
       course: "FPFF",
       score: score,
     });
@@ -337,8 +336,8 @@ export default function FPFFPage() {
               </p>
 
               <p className="text-gray-700">
-                INDOS No.:{" "}
-                <strong>{indos.trim() || "Not Provided"}</strong>
+                Roll No.:{" "}
+<strong>{rollNo.trim() || "Not Provided"}</strong>
               </p>
 
               <div className="mt-6 text-6xl font-bold text-blue-700">
@@ -460,9 +459,9 @@ export default function FPFFPage() {
             />
 
             <input
-              value={indos}
-              onChange={(e) => setIndos(e.target.value)}
-              placeholder="INDOS Number"
+              value={rollNo}
+onChange={(e) => setRollNo(e.target.value)}
+placeholder="Roll No."
               className="rounded-lg border px-4 py-3 outline-none focus:border-blue-500"
             />
           </div>

@@ -286,7 +286,7 @@ const questions: Question[] = [
 ];
 
 const TOTAL_TIME = 30 * 60;
-const PASS_MARK = 18;
+const PASS_MARK = 15;
 
 export default function PSTPage() {
   const [current, setCurrent] = useState(0);
@@ -296,7 +296,7 @@ export default function PSTPage() {
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [submitted, setSubmitted] = useState(false);
   const [candidateName, setCandidateName] = useState("");
-  const [indos, setIndos] = useState("");
+const [rollNo, setRollNo] = useState("");
 
   useEffect(() => {
     if (submitted) return;
@@ -333,7 +333,7 @@ export default function PSTPage() {
     .from("exam_results")
     .insert({
       candidate_name: candidateName,
-      candidate_no: Number(indos),
+      candidate_no: Number(rollno),
       course: "PST",
       score: score,
     });
@@ -393,7 +393,7 @@ export default function PSTPage() {
                 </p>
 
                 <p className="mt-1">
-                  INDOS No.: <strong>{indos || "Not Provided"}</strong>
+                  Roll No.: <strong>{rollNo || "Not Provided"}</strong>
                 </p>
 
                 <div className="mt-6 text-5xl font-bold">
@@ -515,9 +515,9 @@ export default function PSTPage() {
 
             <input
               type="text"
-              placeholder="INDOS Number"
-              value={indos}
-              onChange={(e) => setIndos(e.target.value)}
+             placeholder="Roll No."
+value={rollNo}
+onChange={(e) => setRollNo(e.target.value)}
               className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
             />
           </div>

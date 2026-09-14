@@ -9,7 +9,7 @@ type Question = {
 };
 
 const TOTAL_TIME = 30 * 60;
-const PASS_MARK = 18;
+const PASS_MARK = 15;
 
 const questions: Question[] = [
   {
@@ -316,7 +316,7 @@ export default function EFAPage() {
   const [submitted, setSubmitted] = useState(false);
 
   const [candidateName, setCandidateName] = useState("");
-  const [indos, setIndos] = useState("");
+ const [rollNo, setRollNo] = useState("");
 
   const selectAnswer = (optionIndex: number) => {
     const updated = [...answers];
@@ -339,7 +339,7 @@ export default function EFAPage() {
   const { error } = await supabase.from("exam_results").insert([
     {
       candidate_name: candidateName,
-      candidate_no: Number(indos),
+      candidate_no: Number(rollNo),
       course: "EFA",
       score: score,
     },
@@ -358,7 +358,7 @@ export default function EFAPage() {
     setTimeLeft(TOTAL_TIME);
     setSubmitted(false);
     setCandidateName("");
-    setIndos("");
+    setRollNo("");
   };
 
   useEffect(() => {
@@ -433,8 +433,8 @@ export default function EFAPage() {
               </p>
 
               <p className="mt-1 text-lg">
-                INDOS No.:{" "}
-                <strong>{indos.trim() || "Not Provided"}</strong>
+                ROLLNo.:{" "}
+                <strong>{rollNo.trim() || "Not Provided"}</strong>
               </p>
 
               <div className="mt-6">
@@ -572,9 +572,9 @@ export default function EFAPage() {
 
             <input
               type="text"
-              placeholder="INDOS Number"
-              value={indos}
-              onChange={(e) => setIndos(e.target.value)}
+              placeholder="ROLL Number"
+              value={rollNo}
+              onChange={(e) => setRollNo(e.target.value)}
               className="rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
             />
           </div>

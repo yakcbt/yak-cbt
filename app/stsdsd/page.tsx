@@ -312,7 +312,7 @@ const questions: Question[] = [
 ];
 
 const TOTAL_TIME = 30 * 60;
-const PASS_MARK = 18;
+const PASS_MARK = 15;
 
 export default function STSDSDPage() {
   const [current, setCurrent] = useState(0);
@@ -322,7 +322,7 @@ export default function STSDSDPage() {
   const [submitted, setSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [name, setName] = useState("");
-  const [indos, setIndos] = useState("");
+ const [rollNo, setRollNo] = useState("");
 async function submitTest() {
   if (submitted) return;
 
@@ -333,7 +333,7 @@ async function submitTest() {
   const { error } = await supabase.from("exam_results").insert([
     {
       candidate_name: name,
-      candidate_no: Number(indos),
+      candidate_no: Number(rollNo),
       course: "STSDSD",
       score: score,
     },
@@ -412,7 +412,7 @@ async function submitTest() {
               </p>
 
               <p className="mt-1">
-                INDOS No.: <strong>{indos || "Not Provided"}</strong>
+               Roll No.: <strong>{rollNo || "Not Provided"}</strong>
               </p>
 
               <p className="mt-6 text-5xl font-bold text-blue-800">
@@ -513,9 +513,9 @@ async function submitTest() {
             />
 
             <input
-              value={indos}
-              onChange={(e) => setIndos(e.target.value)}
-              placeholder="INDOS Number"
+              value={rollNo}
+              onChange={(e) => setRollNo(e.target.value)}
+              placeholder="ROLL Number"
               className="rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

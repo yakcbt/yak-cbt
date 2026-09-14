@@ -167,7 +167,8 @@ if (!isLoggedIn) {
                 <tr>
                   <th className="p-3 text-left">Date / Time</th>
                   <th className="p-3 text-left">Candidate Name</th>
-                  <th className="p-3 text-left">INDOS / No.</th>
+<th className="p-3 text-left">Roll No.</th>
+
                   <th className="p-3 text-left">Course</th>
                   <th className="p-3 text-left">Score</th>
                   <th className="p-3 text-left">Result</th>
