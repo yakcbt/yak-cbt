@@ -150,6 +150,12 @@ if (!isLoggedIn) {
           >
             Refresh
           </button>
+          <button
+  onClick={handleLogout}
+  className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
+>
+  Logout
+</button>
         </div>
 
         <div className="overflow-x-auto rounded-xl bg-white shadow">
