@@ -333,7 +333,7 @@ const [rollNo, setRollNo] = useState("");
     .from("exam_results")
     .insert({
       candidate_name: candidateName,
-      candidate_no: Number(rollno),
+      candidate_no: Number(rollNo),
       course: "PST",
       score: score,
     });
