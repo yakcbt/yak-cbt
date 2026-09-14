@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { supabase } from "@/lib/supabase";
 type Question = {
   question: string;
   options: string[];
@@ -333,9 +333,24 @@ export default function EFAPage() {
     }, 0);
   };
 
-  const submitTest = () => {
-    setSubmitted(true);
-  };
+ const submitTest = async () => {
+  const score = calculateScore();
+
+  const { error } = await supabase.from("exam_results").insert([
+    {
+      candidate_name: candidateName,
+      candidate_no: Number(indos),
+      course: "EFA",
+      score: score,
+    },
+  ]);
+
+  if (error) {
+    console.error("Error saving result:", error);
+  }
+
+  setSubmitted(true);
+};
 
   const restartTest = () => {
     setCurrent(0);

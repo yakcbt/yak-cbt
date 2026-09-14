@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { supabase } from "@/lib/supabase";
 type Question = {
   question: string;
   options: string[];
@@ -323,7 +323,29 @@ export default function STSDSDPage() {
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [name, setName] = useState("");
   const [indos, setIndos] = useState("");
+async function submitTest() {
+  if (submitted) return;
 
+  const score = answers.reduce((total, answer, index) => {
+    return total + (answer === questions[index].answer ? 1 : 0);
+  }, 0);
+
+  const { error } = await supabase.from("exam_results").insert([
+    {
+      candidate_name: name,
+      candidate_no: Number(indos),
+      course: "STSDSD",
+      score: score,
+    },
+  ]);
+
+  if (error) {
+    console.error("Error saving result:", error);
+    return;
+  }
+
+  setSubmitted(true);
+}
   useEffect(() => {
     if (submitted) return;
 
@@ -534,6 +556,7 @@ export default function STSDSDPage() {
                     </span>{" "}
                     {option}
                   </button>
+
                 );
               })}
             </div>
@@ -562,11 +585,11 @@ export default function STSDSDPage() {
                 </button>
               ) : (
                 <button
-                  onClick={() => setSubmitted(true)}
-                  className="rounded-xl bg-green-600 px-5 py-3 font-bold text-white hover:bg-green-700"
-                >
-                  Submit Test
-                </button>
+  onClick={submitTest}
+  className="rounded-xl bg-green-600 px-5 py-3 font-bold"
+>
+  Submit Test
+</button>
               )}
             </div>
           </section>
@@ -601,7 +624,7 @@ export default function STSDSDPage() {
             </div>
 
             <button
-              onClick={() => setSubmitted(true)}
+             onClick={submitTest}
               className="mt-6 w-full rounded-xl bg-green-600 px-4 py-3 font-bold text-white hover:bg-green-700"
             >
               Submit Test
