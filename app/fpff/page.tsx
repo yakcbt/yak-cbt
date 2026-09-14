@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { supabase } from "../../lib/supabase";
 type Question = {
   q: string;
   options: string[];
@@ -290,11 +290,26 @@ export default function FPFFPage() {
     setIndos("");
   }
 
-  function submitTest() {
-    if (!submitted) {
-      setSubmitted(true);
-    }
+  async function submitTest() {
+  if (submitted) return;
+
+  const { error } = await supabase
+    .from("exam_results")
+    .insert({
+      candidate_name: name,
+      candidate_no: Number(indos),
+      course: "FPFF",
+      score: score,
+    });
+
+  if (error) {
+    console.error("Result save error:", error);
+    alert("Result save nahi hua.");
+    return;
   }
+
+  setSubmitted(true);
+}
 
   if (submitted) {
     return (

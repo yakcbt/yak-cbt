@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { supabase } from "../../lib/supabase";
 type Question = {
   q: string;
   options: string[];
@@ -326,9 +326,26 @@ export default function PSTPage() {
     return score + (selected !== null && selected === questions[index].answer ? 1 : 0);
   }, 0);
 };
-  const submitTest = () => {
-    setSubmitted(true);
-  };
+ const submitTest = async () => {
+  const score = calculateScore();
+
+  const { error } = await supabase
+    .from("exam_results")
+    .insert({
+      candidate_name: candidateName,
+      candidate_no: Number(indos),
+      course: "PST",
+      score: score,
+    });
+
+  if (error) {
+    console.error("Result save error:", error);
+    alert("Result save nahi hua.");
+    return;
+  }
+
+  setSubmitted(true);
+};
 
   const restartTest = () => {
     setCurrent(0);
