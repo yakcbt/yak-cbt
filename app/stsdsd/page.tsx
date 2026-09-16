@@ -475,10 +475,10 @@ async function submitTest() {
             </div>
 
             <button
-              onClick={restart}
+onClick={() => window.location.href = "/"}
               className="mt-8 w-full rounded-xl bg-blue-700 px-6 py-3 font-bold text-white hover:bg-blue-800"
             >
-              Restart Test
+             Back To Home
             </button>
           </div>
         </div>

@@ -516,10 +516,10 @@ export default function EFAPage() {
 
             <div className="mt-8 text-center">
               <button
-                onClick={restartTest}
+               onClick={() => window.location.href = "/stsdsd"}
                 className="rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white hover:bg-blue-700"
               >
-                Restart Test
+               Next course
               </button>
             </div>
 

@@ -466,11 +466,10 @@ const [rollNo, setRollNo] = useState("");
             </div>
 
             <button
-              onClick={restartTest}
+             onClick={() => window.location.href = "/fpff"}
               className="mt-8 w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
             >
-              Restart Test
-            </button>
+             Next Course            </button>
 
             <p className="mt-6 text-center text-sm text-gray-500">
               YAK Education Trust • PST CBT Practice / Internal Assessment
