@@ -362,7 +362,9 @@ export default function EFAPage() {
     setCandidateName("");
     setRollNo("");
   };
-
+useEffect(() => {
+    setShufffledQuestions([...questions].sort(() => Math.random() - 0.5));
+  }, []);
   useEffect(() => {
     if (submitted) return;
 
@@ -472,7 +474,7 @@ export default function EFAPage() {
               </h3>
 
               <div className="space-y-4">
-                {questions.map((q, index) => {
+                {shuffledQuestions.map((q, index) => {
                   const selected = answers[index];
 
                   const isCorrect = selected === q.answer;

@@ -304,6 +304,7 @@ const questions: Question[] = [
 ];
 
 export default function PSSRPage() {
+const [randomQuestions] = useState<Question[]>(() => [...questions].sort(() => Math.random() - 0.5));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(
     Array(questions.length).fill(null)
@@ -577,11 +578,11 @@ onChange={(e) => setRollNo(e.target.value)}
           <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_280px]">
             <section className="rounded-xl border bg-white p-5 shadow-sm">
               <h3 className="text-lg font-bold leading-7 text-slate-800">
-                Q{current + 1}. {questions[current].question}
+                Q{current + 1}. {randomQuestions[current].question}
               </h3>
 
               <div className="mt-5 space-y-3">
-                {questions[current].options.map((option, optionIndex) => {
+                {randomQuestions[current].options.map((option, optionIndex) => {
                   const selected = answers[current] === optionIndex;
 
                   return (

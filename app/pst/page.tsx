@@ -289,6 +289,7 @@ const TOTAL_TIME = 30 * 60;
 const PASS_MARK = 15;
 
 export default function PSTPage() {
+  const [randomQuestions] = useState<Question[]>(() => [...questions].sort(() => Math.random() - 0.5));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(
     Array(questions.length).fill(null)
@@ -480,7 +481,7 @@ const [rollNo, setRollNo] = useState("");
     );
   }
 
-  const question = questions[current];
+const q = randomQuestions[current];
   const selectedAnswer = answers[current];
 
   return (
@@ -544,11 +545,11 @@ onChange={(e) => setRollNo(e.target.value)}
           {/* Question */}
           <div className="lg:col-span-3 rounded-2xl bg-white p-6 shadow-lg">
             <h2 className="text-lg font-bold leading-relaxed">
-              Q{current + 1}. {question.q}
+              Q{current + 1}. {q.q}
             </h2>
 
             <div className="mt-6 space-y-3">
-              {question.options.map((option, index) => {
+              {q.options.map((option, index) => {
                 const isSelected = selectedAnswer === index;
 
                 return (

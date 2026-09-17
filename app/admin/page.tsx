@@ -184,7 +184,7 @@ if (!isLoggedIn) {
 
               <tbody>
                 {results.map((result) => {
-                  const passed = result.score >= 18;
+                  const passed = result.score >= 15;
 
                   return (
                     <tr key={result.id} className="border-b">
