@@ -64,6 +64,26 @@ useEffect(() => {
 
     setLoading(false);
   }
+  async function deleteResult(id: number) {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this result?"
+  );
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabase
+    .from("exam_results")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Result delete nahi hua.");
+    console.error(error);
+    return;
+  }
+
+  setResults((prev) => prev.filter((result) => result.id !== id));
+}
 async function handleLogin(e: React.FormEvent) {
   e.preventDefault();
   setLoginError("");
@@ -106,7 +126,7 @@ if (!isLoggedIn) {
           placeholder="Admin Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-8 w-full border rounded-lg p-3"
+          className="mt-8 w-full border rounded-lg p-3 print:p-1"
           required
         />
 
@@ -115,7 +135,7 @@ if (!isLoggedIn) {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-4 w-full border rounded-lg p-3"
+          className="mt-4 w-full border rounded-lg p-3 print:p-1"
           required
         />
 
@@ -133,8 +153,27 @@ if (!isLoggedIn) {
     </main>
   );
 }
-  return (
-    <main className="min-h-screen bg-gray-100 p-6">
+return (
+  <>
+    <style jsx global>{`
+      @media print {
+        @page {
+          size: A4 landscape;
+          margin: 3mm;
+        }
+          table {
+  font-size: 11px !important;
+  line-height: 1 !important;
+}
+
+th, td {
+  padding: 0 !important;
+  height: auto !important;
+}
+      }
+    `}</style>
+
+    <main className="min-h-screen bg-gray-100 p-6 print:min-h-0 print:bg-white print:p-0">
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -146,38 +185,39 @@ if (!isLoggedIn) {
 
           <button
             onClick={fetchResults}
-            className="rounded-lg bg-blue-700 px-4 py-2 font-semibold text-white"
+className="rounded-lg bg-blue-700 px-4 py-2 font-semibold text-white print:hidden"
           >
             Refresh
           </button>
         
           <button
   onClick={() => window.print()}
-  className="rounded-lg bg-green-600 px-4 py-2 font-semibold text-white"
+className="rounded-lg bg-green-600 px-4 py-2 font-semibold text-white print:hidden"
 >
   Print Results
 </button>
 <button
   onClick={handleLogout}
-  className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
->
+className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700 print:hidden">
   Logout
 </button>
         </div>
 
-        <div className="overflow-x-auto rounded-xl bg-white shadow">
+       <div className="overflow-x-auto rounded-xl bg-white shadow print:overflow-visible print:rounded-none print:shadow-none">
           {loading ? (
             <p className="p-6">Loading results...</p>
           ) : (
-            <table className="w-full border-collapse">
-              <thead className="bg-blue-700 text-white">
+
+<table className="w-full text-sm print:table-fixed print:text-[9px]">
+  <thead>
                 <tr>
                   <th className="p-3 text-left">Date / Time</th>
                   <th className="p-3 text-left">Candidate Name</th>
 <th className="p-3 text-left">Roll No.</th>
 
                   <th className="p-3 text-left">Course</th>
-                  <th className="p-3 text-left">Score</th>
+                  <th className="p-3 text-left">Score</th>.
+                  <th className="p-3 text-left print:hidden">Delete</th>
                   <th className="p-3 text-left">Result</th>
                 </tr>
               </thead>
@@ -188,20 +228,28 @@ if (!isLoggedIn) {
 
                   return (
                     <tr key={result.id} className="border-b">
-                      <td className="p-3">
+<td className="p-3 print:p-1">
                         {new Date(result.created_at).toLocaleString()}
                       </td>
-                      <td className="p-3">{result.candidate_name}</td>
-                      <td className="p-3">{result.candidate_no ?? "-"}</td>
-                      <td className="p-3 font-semibold">{result.course}</td>
-                      <td className="p-3">{result.score}/30</td>
+                      <td className="p-3 print:p-1">{result.candidate_name}</td>
+                      <td className="p-3 print:p-1">{result.candidate_no ?? "-"}</td>
+                      <td className="p-3 print:p-1 font-semibold">{result.course}</td>
+                      <td className="p-3 print:p-1">{result.score}/30</td>
                       <td
-                        className={`p-3 font-bold ${
+                        className={`p-3 print:p-1 font-bold ${
                           passed ? "text-green-600" : "text-red-600"
                         }`}
                       >
                         {passed ? "PASS" : "FAIL"}
                       </td>
+                      <td className="p-3 print:hidden">
+  <button
+    onClick={() => deleteResult(result.id)}
+    className="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
+  >
+    Delete
+  </button>
+</td>
                     </tr>
                   );
                 })}
@@ -210,6 +258,6 @@ if (!isLoggedIn) {
           )}
         </div>
       </div>
-    </main>
+    </main></>
   );
 }
