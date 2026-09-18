@@ -291,6 +291,10 @@ export default function FPFFPage() {
 
   async function submitTest() {
   if (submitted) return;
+  if (!name.trim() || !rollNo.trim()) {
+  alert("Please enter Candidate Name and Roll No. before submitting the test.");
+  return;
+}
 
   const { error } = await supabase
     .from("exam_results")

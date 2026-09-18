@@ -325,7 +325,10 @@ export default function STSDSDPage() {
  const [rollNo, setRollNo] = useState("");
 async function submitTest() {
   if (submitted) return;
-
+if (!name.trim() || !rollNo.trim()) {
+  alert("Please enter Candidate Name and Roll No. before submitting the test.");
+  return;
+}
   const score = answers.reduce((total, answer, index) => {
     return total + (answer === questions[index].answer ? 1 : 0);
   }, 0);

@@ -328,6 +328,10 @@ const [rollNo, setRollNo] = useState("");
   }, 0);
 };
  const submitTest = async () => {
+  if (!candidateName.trim() || !rollNo.trim()) {
+  alert("Please enter Candidate Name and Roll No. before submitting the test.");
+  return;
+}
   const score = calculateScore();
 
   const { error } = await supabase
