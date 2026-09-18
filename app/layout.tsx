@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "YAK CBT – STCW Computer Based Test | YAK Education Trust",
   description:
     "YAK CBT by YAK Education Trust provides online STCW Computer Based Test practice for PST, FPFF, PSSR, EFA and STSDSD courses.",
+ alternates: {
+  canonical: "https://yakcbt.vercel.app/",
+},
 };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
